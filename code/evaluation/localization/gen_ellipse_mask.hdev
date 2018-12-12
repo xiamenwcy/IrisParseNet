@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="13.0.1.1">
+<procedure name="main">
+<interface/>
+<body>
+<c>* Iris inner/outer elliptical mask is generated based on the parameters of the predicted iris inner/outer ellipse.</c>
+<c></c>
+<c></c>
+<c>* set the path of iris localization results folder  </c>
+<l>path:='H:/research/Iris/IrisSegNet/IrisNet/2018-6-28/IrisSegNet_final_result/vgg_dilation/test/casia/iris_iter_30000/'</l>
+<l>ellipse_params_path:=path+'seg_ellipse_param/'</l>
+<l>pupil_ouput :=path+'pupil_ellipse_mask/'</l>
+<l>iris_ouput :=path+'iris_ellipse_mask/'</l>
+<c></c>
+<l> img_path:= 'H:/research/Iris/data/pascal_voc/CASIA/test/JPEGImages/'</l>
+<l> *img_path:= 'H:/research/Iris/data/pascal_voc/MICHE/scale_keep/test/JPEGImages/'</l>
+<l> *img_path:= 'H:/research/Iris/data/pascal_voc/NICE/NICE1/test/JPEGImages/'</l>
+<l>list_image_files (img_path, 'default', [], ImageFiles)  </l>
+<l>tuple_regexp_select(ImageFiles, ['\\.(JPEG)$','ignore_case'], ImageFiles)  </l>
+<c></c>
+<c></c>
+<l>for Index := 0 to |ImageFiles| - 1 by 1  </l>
+<l>    dev_close_window ()</l>
+<l>    read_image (Image, ImageFiles[Index]) </l>
+<c> </c>
+<l>    parse_filename(ImageFiles[Index], BaseName, Extension, Directory)</l>
+<c>    </c>
+<l>    get_image_pointer1 (Image, Pointer, Type, Width, Height)</l>
+<l>    gen_image_const (irisImg, 'byte', Width, Height)</l>
+<l>    gen_image_const(pupilImg, 'byte', Width, Height)</l>
+<c>    </c>
+<l>    dev_open_window (0, 0, Width,Height, 'black', WindowHandle1)</l>
+<l>    dev_display(Image)</l>
+<l>    ellipse_name:= ellipse_params_path+BaseName+'.ini'</l>
+<l>    read_ini(ellipse_name, IrisExist, Iris_center_x, Iris_center_y, Iirs_sRadius, Iirs_lRadius, Iris_phi, PupilExist, Pupil_center_x, Pupil_center_y, Pupil_sRadius, Pupil_lRadius, Pupil_phi)</l>
+<l>    if(IrisExist) </l>
+<l>        gen_ellipse(IrisEllipse, Iris_center_y, Iris_center_x, Iris_phi, Iirs_lRadius, Iirs_sRadius)</l>
+<l>        paint_region(IrisEllipse, irisImg, irisImg, 255, 'fill')</l>
+<l>    endif</l>
+<l>    if(PupilExist) </l>
+<l>        gen_ellipse(PupilEllipse, Pupil_center_y, Pupil_center_x, Pupil_phi, Pupil_lRadius, Pupil_sRadius)</l>
+<l>        paint_region(PupilEllipse, pupilImg, pupilImg, 255, 'fill')</l>
+<l>    endif</l>
+<c>      *save results</c>
+<l>    write_image(irisImg, 'png', 0, iris_ouput+BaseName+'.png')        </l>
+<l>    write_image(pupilImg, 'png', 0, pupil_ouput+BaseName+'.png')     </l>
+<c></c>
+<l>endfor</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="get_ellipse_point">
+<interface>
+<ic>
+<par name="Row" base_type="ctrl" dimension="0"/>
+<par name="Column" base_type="ctrl" dimension="0"/>
+<par name="Phi" base_type="ctrl" dimension="0"/>
+<par name="Radius1" base_type="ctrl" dimension="0"/>
+<par name="Radius2" base_type="ctrl" dimension="0"/>
+<par name="theta" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="row" base_type="ctrl" dimension="0"/>
+<par name="col" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>theta_rad :=theta/180.0*3.141592653</l>
+<l>gen_ellipse_contour_xld (ContEllipse1, Row, Column, Phi, Radius1, Radius2, theta_rad, theta_rad, 'positive', 1.5)</l>
+<l>get_contour_xld (ContEllipse1, row, col)</l>
+<c></c>
+</body>
+<docu id="get_ellipse_point">
+<abstract lang="zh_CN">用来求解椭圆上的从长轴开始的theta角度上对应的点的坐标</abstract>
+<parameters>
+<parameter id="Column">
+<default_value>Column</default_value>
+<description lang="zh_CN">ellipse.center.x</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Phi">
+<default_value>Phi</default_value>
+<description lang="zh_CN">ellipse.angle.rad</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Radius1">
+<default_value>Radius1</default_value>
+<description lang="zh_CN">ellipse.radius1</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Radius2">
+<default_value>Radius2</default_value>
+<description lang="zh_CN">ellipse.radius2</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="Row">
+<default_value>Row</default_value>
+<description lang="zh_CN">ellipse.center.y</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="col">
+<description lang="zh_CN">point.x(corrspoinding theta)</description>
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="row">
+<description lang="zh_CN">point.y (corresponding theta)</description>
+</parameter>
+<parameter id="theta">
+<default_value>theta</default_value>
+<description lang="zh_CN">angle</description>
+<sem_type>real</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="write_my_matirx">
+<interface>
+<ic>
+<par name="matrix" base_type="ctrl" dimension="0"/>
+<par name="width" base_type="ctrl" dimension="0"/>
+<par name="height" base_type="ctrl" dimension="0"/>
+<par name="filaname" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>get_size_matrix (matrix, Rows, Columns)</l>
+<l>open_file (filaname, 'output', FileHandle)</l>
+<l>* parse_filename(filaname, BaseName, Extension, Directory) </l>
+<l> str:= 'version: 1'</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l> fnew_line (FileHandle)</l>
+<l> str:= 'n_points:  '+Rows</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l>  fnew_line (FileHandle)</l>
+<l> str:= '{'</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l>  fnew_line (FileHandle)</l>
+<l>for row := 0 to Rows-1 by 1</l>
+<l>     get_value_matrix (matrix,row, 0, Value1)</l>
+<l>     get_value_matrix (matrix,row, 1, Value2)</l>
+<c>     </c>
+<l>     if(Value1&lt;0 or Value2&lt;0 or Value1&gt;width or Value2&gt;height)</l>
+<l>          str:=Value1$'.2f'+' '+Value2$'.2f'+' '+2</l>
+<l>     else</l>
+<l>          str:=Value1$'.2f'+' '+Value2$'.2f'+' '+1</l>
+<l>     endif</l>
+<l>     fwrite_string (FileHandle, str)  </l>
+<l>      fnew_line (FileHandle)   </l>
+<l>endfor</l>
+<l> str:= '}'</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l>close_file(FileHandle)</l>
+</body>
+<docu id="write_my_matirx">
+<parameters>
+<parameter id="filaname">
+<default_value>./filename.pts</default_value>
+<mixed_type>false</mixed_type>
+<sem_type>filename.write</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+</parameter>
+<parameter id="height"/>
+<parameter id="matrix">
+<description lang="zh_CN">输入要写的矩阵</description>
+<mixed_type>false</mixed_type>
+<sem_type>matrix</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="width"/>
+</parameters>
+</docu>
+</procedure>
+<procedure name="write_ini">
+<interface>
+<ic>
+<par name="IrisExist" base_type="ctrl" dimension="0"/>
+<par name="Iris_center_x" base_type="ctrl" dimension="0"/>
+<par name="Iris_center_y" base_type="ctrl" dimension="0"/>
+<par name="Iirs_sRadius" base_type="ctrl" dimension="0"/>
+<par name="Iirs_lRadius" base_type="ctrl" dimension="0"/>
+<par name="Iris_phi" base_type="ctrl" dimension="0"/>
+<par name="PupilExist" base_type="ctrl" dimension="0"/>
+<par name="Pupil_center_x" base_type="ctrl" dimension="0"/>
+<par name="Pupil_center_y" base_type="ctrl" dimension="0"/>
+<par name="Pupil_sRadius" base_type="ctrl" dimension="0"/>
+<par name="Pupil_lRadius" base_type="ctrl" dimension="0"/>
+<par name="Pupil_phi" base_type="ctrl" dimension="0"/>
+<par name="filepath" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>open_file (filepath, 'output', FileHandle)</l>
+<l> str:= '[iris]'</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l> fnew_line (FileHandle)</l>
+<l> if(IrisExist)</l>
+<l>     str:= 'exist=true'</l>
+<l> else</l>
+<l>     str:= 'exist=false'</l>
+<l> endif</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l>  fnew_line (FileHandle)</l>
+<l>  if(IrisExist)</l>
+<l>      str:= 'center_x='+Iris_center_x$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>      str:= 'center_y='+Iris_center_y$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>    str := 'short_radius='+Iirs_sRadius$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>    str := 'long_radius='+Iirs_lRadius$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>    str := 'rad_phi='+Iris_phi$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>  endif</l>
+<c>  *空格</c>
+<l>   str:= ' '</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l> fnew_line (FileHandle)</l>
+<c>  *pupil</c>
+<l> str:= '[pupil]'</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l> fnew_line (FileHandle)</l>
+<l> if(PupilExist)</l>
+<l>     str:= 'exist=true'</l>
+<l> else</l>
+<l>     str:= 'exist=false'</l>
+<l> endif</l>
+<l> fwrite_string (FileHandle, str)</l>
+<l>  fnew_line (FileHandle)</l>
+<l>  if(PupilExist)</l>
+<l>      str:= 'center_x='+Pupil_center_x$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>      str:= 'center_y='+Pupil_center_y$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>    str := 'short_radius='+Pupil_sRadius$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>    str := 'long_radius='+Pupil_lRadius$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>     str := 'rad_phi='+Pupil_phi$'.2f'</l>
+<l>      fwrite_string (FileHandle, str)</l>
+<l>      fnew_line (FileHandle)</l>
+<l>  endif</l>
+<l>close_file(FileHandle)</l>
+</body>
+<docu id="write_ini">
+<parameters>
+<parameter id="Iirs_lRadius"/>
+<parameter id="Iirs_sRadius"/>
+<parameter id="IrisExist">
+<mixed_type>false</mixed_type>
+<sem_type>any</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+</parameter>
+<parameter id="Iris_center_x">
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="Iris_center_y"/>
+<parameter id="Iris_phi"/>
+<parameter id="PupilExist"/>
+<parameter id="Pupil_center_x"/>
+<parameter id="Pupil_center_y"/>
+<parameter id="Pupil_lRadius"/>
+<parameter id="Pupil_phi"/>
+<parameter id="Pupil_sRadius"/>
+<parameter id="filepath">
+<mixed_type>false</mixed_type>
+<sem_type>filename</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="get_center">
+<interface>
+<io>
+<par name="region" base_type="iconic" dimension="0"/>
+</io>
+<oc>
+<par name="center_row" base_type="ctrl" dimension="0"/>
+<par name="center_col" base_type="ctrl" dimension="0"/>
+<par name="Radius" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>area_center(region, Area, _, _)</l>
+<l>if(Area=0)</l>
+<l>    center_row:=-1</l>
+<l>    center_col:=-1</l>
+<l>    return()</l>
+<l>endif</l>
+<c></c>
+<l>*skeleton(region, Skeleton)</l>
+<l>shape_trans (region, RegionTrans, 'convex')</l>
+<l>fill_up(RegionTrans, RegionFillUp)</l>
+<l>gen_contour_region_xld(RegionFillUp, Contours, 'border')</l>
+<l>length_xld (Contours, Length)</l>
+<l>max_len:=Length[0]</l>
+<l>max_index:=0</l>
+<l>for Index3 := 1 to |Length|-1 by 1</l>
+<l>    if(Length[Index3]&gt;max_len)</l>
+<l>        max_len:=Length[Index3]</l>
+<l>        max_index:=0</l>
+<l>    endif</l>
+<l>endfor</l>
+<l>select_obj(Contours, SelectedContour, max_index+1)</l>
+<l>fit_circle_contour_xld (SelectedContour, 'geotukey', -1, 0, 0, 3, 2, center_row, center_col, Radius, _, _, _)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="get_center">
+<parameters>
+<parameter id="Radius">
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="center_col">
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="center_row">
+<sem_type>real</sem_type>
+</parameter>
+<parameter id="region">
+<sem_type>region</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="copy_region_image">
+<interface>
+<io>
+<par name="src" base_type="iconic" dimension="0"/>
+<par name="region" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="dst" base_type="iconic" dimension="0"/>
+</oo>
+</interface>
+<body>
+<l>get_image_size(src, Width, Height)</l>
+<l>gen_image_const(dst, 'byte', Width, Height)</l>
+<l>complement(region, RegionComplement)</l>
+<l>copy_image(src, dst)</l>
+<l>overpaint_region (dst, RegionComplement, 0, 'fill')</l>
+<c></c>
+</body>
+<docu id="copy_region_image">
+<parameters>
+<parameter id="dst">
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="region">
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="src">
+<sem_type>image</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+<procedure name="read_ini">
+<interface>
+<ic>
+<par name="filename" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="IrisExist" base_type="ctrl" dimension="0"/>
+<par name="Iris_center_x" base_type="ctrl" dimension="0"/>
+<par name="Iris_center_y" base_type="ctrl" dimension="0"/>
+<par name="Iirs_sRadius" base_type="ctrl" dimension="0"/>
+<par name="Iirs_lRadius" base_type="ctrl" dimension="0"/>
+<par name="Iris_phi" base_type="ctrl" dimension="0"/>
+<par name="PupilExist" base_type="ctrl" dimension="0"/>
+<par name="Pupil_center_x" base_type="ctrl" dimension="0"/>
+<par name="Pupil_center_y" base_type="ctrl" dimension="0"/>
+<par name="Pupil_sRadius" base_type="ctrl" dimension="0"/>
+<par name="Pupil_lRadius" base_type="ctrl" dimension="0"/>
+<par name="Pupil_phi" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>open_file (filename, 'input', FileHandle)</l>
+<c>*iris</c>
+<l>fread_string(FileHandle, str, IsEOF)</l>
+<l>fread_string(FileHandle, str, IsEOF)</l>
+<l>tuple_split(str, '=', iris_exist_att)</l>
+<l>if(iris_exist_att[1]='true')</l>
+<l>    IrisExist:=true</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_x_str)</l>
+<l>    tuple_number(center_x_str[1],Iris_center_x)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_y_str)</l>
+<l>    tuple_number(center_y_str[1],Iris_center_y)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', short_radius_str)</l>
+<l>    tuple_number(short_radius_str[1],Iirs_sRadius)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', long_radius_str)</l>
+<l>    tuple_number(long_radius_str[1],Iirs_lRadius)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', rad_phi_str)</l>
+<l>    tuple_number(rad_phi_str[1],Iris_phi)</l>
+<l>else</l>
+<l>     IrisExist:=false</l>
+<l>     Iris_center_x:=-1</l>
+<l>     Iris_center_y:=-1</l>
+<l>     Iirs_sRadius:=-1</l>
+<l>     Iirs_lRadius:=-1</l>
+<l>     Iris_phi:=-1</l>
+<l>endif</l>
+<c></c>
+<c>*pupil</c>
+<l> fread_string(FileHandle, str, IsEOF)</l>
+<l>fread_string(FileHandle, str, IsEOF)</l>
+<l>tuple_split(str, '=', pupil_exist_att)</l>
+<l>if(pupil_exist_att[1]='true')</l>
+<l>    PupilExist:=true</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_x_str)</l>
+<l>    tuple_number(center_x_str[1],Pupil_center_x)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_y_str)</l>
+<l>    tuple_number(center_y_str[1],Pupil_center_y)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', short_radius_str)</l>
+<l>    tuple_number(short_radius_str[1],Pupil_sRadius)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', long_radius_str)</l>
+<l>    tuple_number(long_radius_str[1],Pupil_lRadius)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', rad_phi_str)</l>
+<l>    tuple_number(rad_phi_str[1],Pupil_phi)</l>
+<l>else</l>
+<l>     PupilExist:=false</l>
+<l>     Pupil_center_x:=-1</l>
+<l>     Pupil_center_y:=-1</l>
+<l>     Pupil_sRadius:=-1</l>
+<l>     Pupil_lRadius:=-1</l>
+<l>     Pupil_phi:=-1</l>
+<l>endif</l>
+<c>*To the end of the file,IsEOF=1</c>
+<l> fread_string(FileHandle, str, IsEOF)  </l>
+<l> close_file(FileHandle)</l>
+<c></c>
+<c> </c>
+<c></c>
+<c> </c>
+<c> </c>
+<c></c>
+<c></c>
+<c> </c>
+<c> </c>
+</body>
+<docu id="read_ini">
+<parameters>
+<parameter id="Iirs_lRadius"/>
+<parameter id="Iirs_sRadius"/>
+<parameter id="IrisExist"/>
+<parameter id="Iris_center_x"/>
+<parameter id="Iris_center_y"/>
+<parameter id="Iris_phi"/>
+<parameter id="PupilExist"/>
+<parameter id="Pupil_center_x"/>
+<parameter id="Pupil_center_y"/>
+<parameter id="Pupil_lRadius"/>
+<parameter id="Pupil_phi"/>
+<parameter id="Pupil_sRadius"/>
+<parameter id="filename"/>
+</parameters>
+</docu>
+</procedure>
+<procedure name="read_circle_ini">
+<interface>
+<ic>
+<par name="filename" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="IrisExist" base_type="ctrl" dimension="0"/>
+<par name="iris_center_x" base_type="ctrl" dimension="0"/>
+<par name="iris_center_y" base_type="ctrl" dimension="0"/>
+<par name="iris_radius" base_type="ctrl" dimension="0"/>
+<par name="PupilExist" base_type="ctrl" dimension="0"/>
+<par name="pupil_center_x" base_type="ctrl" dimension="0"/>
+<par name="pupil_center_y" base_type="ctrl" dimension="0"/>
+<par name="pupil_radius" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>open_file (filename, 'input', FileHandle)</l>
+<c>*iris</c>
+<l>fread_string(FileHandle, str, IsEOF)</l>
+<l>fread_string(FileHandle, str, IsEOF)</l>
+<l>tuple_split(str, '=', iris_exist_att)</l>
+<l>if(iris_exist_att[1]='true')</l>
+<l>    IrisExist:=true</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_x_str)</l>
+<l>    tuple_number(center_x_str[1],iris_center_x)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_y_str)</l>
+<l>    tuple_number(center_y_str[1],iris_center_y)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=',  radius_str)</l>
+<l>    tuple_number(radius_str[1],iris_radius)</l>
+<l>else</l>
+<l>     IrisExist:=false</l>
+<l>     iris_center_x:=-1</l>
+<l>     iris_center_y:=-1</l>
+<l>     iris_radius:=-1</l>
+<l>endif</l>
+<c></c>
+<c>*pupil</c>
+<l> fread_string(FileHandle, str, IsEOF)</l>
+<l>fread_string(FileHandle, str, IsEOF)</l>
+<l>tuple_split(str, '=', pupil_exist_att)</l>
+<l>if(pupil_exist_att[1]='true')</l>
+<l>    PupilExist:=true</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_x_str)</l>
+<l>    tuple_number(center_x_str[1],pupil_center_x)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', center_y_str)</l>
+<l>    tuple_number(center_y_str[1],pupil_center_y)</l>
+<l>    fread_string(FileHandle, str, IsEOF)</l>
+<l>    tuple_split(str, '=', radius_str)</l>
+<l>    tuple_number(radius_str[1],pupil_radius)</l>
+<l>else</l>
+<l>     PupilExist:=false</l>
+<l>     pupil_center_x:=-1</l>
+<l>     pupil_center_y:=-1</l>
+<l>     pupil_radius:=-1</l>
+<l>endif</l>
+<c>*To the end of the file,IsEOF=1</c>
+<l> fread_string(FileHandle, str, IsEOF)  </l>
+<l> close_file(FileHandle)</l>
+<c></c>
+<c> </c>
+<c></c>
+<c> </c>
+<c> </c>
+<c></c>
+<c></c>
+<c> </c>
+<c> </c>
+</body>
+<docu id="read_circle_ini">
+<parameters>
+<parameter id="IrisExist"/>
+<parameter id="PupilExist"/>
+<parameter id="filename"/>
+<parameter id="iris_center_x"/>
+<parameter id="iris_center_y"/>
+<parameter id="iris_radius"/>
+<parameter id="pupil_center_x"/>
+<parameter id="pupil_center_y"/>
+<parameter id="pupil_radius"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

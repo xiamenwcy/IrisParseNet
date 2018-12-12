@@ -1,0 +1,3 @@
+recall_avg: 92.29%     recall_std: 3.99%
+precision_avg: 91.45%     precision_std: 6.69%
+f_measure_avg: 91.67%    f_measure_std: 3.89%

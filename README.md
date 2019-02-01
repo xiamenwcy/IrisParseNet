@@ -11,10 +11,11 @@ As shown in the figure above, we present a novel deep learning based joint iris 
 If you use this code or ground-truth annotations for your research, please cite our papers.
 
 ```
-@article{wcy2018casia,
-  author =       {Wang, Caiyong and Zhu, Yuhao and Liu, Yunfan and He, Ran and Sun, Zhenan },
-  title =        {Joint Iris Segmentation and Localization Using Deep Multi-task Learning Framework},
-  year =         {2018},
+@article{casiairis2019,
+  title={Joint Iris Segmentation and Localization Using Deep Multi-task Learning Framework},
+  author={Caiyong Wang and Yuhao Zhu and Yunfan Liu and Ran He and Zhenan Sun},
+  journal={arXiv preprint abs/1901.11195},
+  year={2019}
 }
 ```
 ## Prerequisites

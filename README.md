@@ -1,7 +1,7 @@
 
 # Towards Complete and Accurate Iris Segmentation Using Deep Multi-Task Attention Network for Non-Cooperative Iris Recognition
 
-Created by [Caiyong Wang](http://wangcaiyong.com/) @ Institute of Automation Chinese Academy of Sciences (**CASIA**)
+Created by [Caiyong Wang](https://caiyong.wang/) @ Institute of Automation, Chinese Academy of Sciences (**CASIA**)
 
 We propose a high-efficiency deep learning based iris segmentation approach, named **IrisParseNet**. 
 The proposed approach first applies a multi-task attention network to simultaneously predict the iris mask, 

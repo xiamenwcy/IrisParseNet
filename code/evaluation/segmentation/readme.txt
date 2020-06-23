@@ -1,1 +1,0 @@
-Before evaluation, we must transform the mask predicted by the proposed  method to binary mask. Please refer to binary/mask_2_bn.m.

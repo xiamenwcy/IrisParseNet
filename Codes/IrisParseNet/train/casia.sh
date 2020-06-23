@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=2 nohup python -s  train_direct_casia.py 2>&1|tee train_casia.log  &

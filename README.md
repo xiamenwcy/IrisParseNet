@@ -103,6 +103,9 @@ Ground truth:
 
 [5] De Marsico M, Nappi M, Riccio D, et al. Mobile iris challenge evaluation (MICHE)-I, biometric iris dataset and protocols[J]. Pattern Recognition Letters, 2015, 57: 17-23.
 
+## Disclaimer
+This package is only provided on "as it is" basis and does not include any warranty of any kind.
+
 
 ## Questions
 Please contact caiyong.wang@cripac.ia.ac.cn 

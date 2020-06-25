@@ -87,7 +87,6 @@ do not have permission to release the original iris images for MICHE-I and UBIRI
 - [UBIRIS.v2](http://iris.di.ubi.pt/ubiris2.html)  Email: hugomcp@di.ubi.pt.
 
 Ground truth:
-- CASIA.v4-distance [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskA5BRygUOHwDzu0e?e=Rzql8k) [[Baidu Drive]](https://pan.baidu.com/s/1cun3WyEk1mxNYBJilpxfYw)(usvd)
 - MICHE-I [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskA-00xhdf9_kxdvu?e=ddMNhx) [[Baidu Drive]](https://pan.baidu.com/s/1IMSauYtkLpKkqqtyypq-lw)(9pj3)
 
   

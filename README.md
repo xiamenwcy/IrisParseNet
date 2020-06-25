@@ -88,7 +88,6 @@ do not have permission to release the original iris images for MICHE-I and UBIRI
 Ground truth:
 - CASIA.v4-distance [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskA5BRygUOHwDzu0e?e=Rzql8k) [[Baidu Drive]](https://pan.baidu.com/s/1cun3WyEk1mxNYBJilpxfYw)(usvd)
 - MICHE-I [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskA-00xhdf9_kxdvu?e=ddMNhx) [[Baidu Drive]](https://pan.baidu.com/s/1IMSauYtkLpKkqqtyypq-lw)(9pj3)
-- UBIRIS.v2 [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskBCAQys3yHu9m7L8?e=qVE3VR) [[Baidu Drive]](https://pan.baidu.com/s/1Gduke7ywunuuQedo6-gHGg)(t2kf)
 
   
 

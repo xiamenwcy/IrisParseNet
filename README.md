@@ -20,7 +20,7 @@ by IrisParseNet, (e) pupil mask predicted by IrisParseNet, and (f) localization
 results of IrisParseNet after post-processing (inner boundary (green) and outer boundary (red)) are shown from left to right.
 
 ## Citation
-If you use this model or corresponding codes for your research, please cite our papers.
+If you use this model or corresponding codes/datas for your research, please cite our papers.
 
 ```
 @article{wang2020iris,
@@ -33,7 +33,8 @@ If you use this model or corresponding codes for your research, please cite our 
   publisher={IEEE}
 }
 ```
-
+Anyone is permitted to use, distribute and change this program for any non-commercial usage. However each of such usage and/or publication must include above citation of this paper.
+ 
 ## Prerequisites
 - linux
 - Python 2.7 ( python3 is not supported!)

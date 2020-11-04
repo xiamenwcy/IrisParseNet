@@ -56,10 +56,10 @@ The complete codes for training and testing the model are placed at **Codes/Iris
 
 We have released the trained models on CASIA.v4-distance (**casia** for short), MICHE-I (**miche** for short), and UBIRIS.v2(**nice** for short). 
 
-- CASIA.v4-distance model [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qsjxlfGi86KSK5ngmb?e=gYmOhL) [[Baidu Drive]](https://pan.baidu.com/s/1N8-3rSiy0OR0g-G82L4MQA)(yavp)
-- MICHE-I model [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qsjxumrHsrxuIrMBIa?e=XDuT0D) [[Baidu Drive]](https://pan.baidu.com/s/1Wbd_5YwyBh4LbxA8cupfOg)(zpi4)
-- UBIRIS.v2 model [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qsjxxTQs2GUSDYVPCk?e=oSTJHc) [[Baidu Drive]](https://pan.baidu.com/s/1kGbHBWOt4NzazFaIlhmI6A)(376p)
-- VGG_ILSVRC_16_layers.caffemodel  [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qsjxown8W7XXFeWVHP?e=xSIwYl) [[Baidu Drive]](https://pan.baidu.com/s/1fx5RZMFPIGcDlfS9iFqvEQ)(7ncn)
+- CASIA.v4-distance model [[Google Drive]](https://drive.google.com/file/d/1y1Usfz95avgkAIb3hwvnwCme9pAW8w1A/view?usp=sharing) [[Baidu Drive]](https://pan.baidu.com/s/1N8-3rSiy0OR0g-G82L4MQA)(yavp)
+- MICHE-I model [[Google Drive]](https://drive.google.com/file/d/12Qr8W2505APLgxt6aJDtoyT-csWawNq3/view?usp=sharing) [[Baidu Drive]](https://pan.baidu.com/s/1Wbd_5YwyBh4LbxA8cupfOg)(zpi4)
+- UBIRIS.v2 model [[Google Drive]](https://drive.google.com/file/d/1WzGxikN4DWn-_Jk7WVLgg4BHEpLpm7Rr/view?usp=sharing) [[Baidu Drive]](https://pan.baidu.com/s/1kGbHBWOt4NzazFaIlhmI6A)(376p)
+- VGG_ILSVRC_16_layers.caffemodel  [[Google Drive]](https://drive.google.com/file/d/1biuFHDyD96JLjfd650OGNFL66-WczSDe/view?usp=sharing) [[Baidu Drive]](https://pan.baidu.com/s/1fx5RZMFPIGcDlfS9iFqvEQ)(7ncn)
 
 
 ### Evaluation protocols
@@ -87,9 +87,9 @@ do not have permission to release the original iris images for MICHE-I and UBIRI
 - [UBIRIS.v2](http://iris.di.ubi.pt/ubiris2.html)  Email: hugomcp@di.ubi.pt.
 
 Ground truth:
-- CASIA.v4-distance [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskBIZ0XDHG3JJE9uu?e=QAthTr) [[Baidu Drive]](https://pan.baidu.com/s/1G9kPfq72Iv5TqlPiQd82fA)(kdd6)
-- MICHE-I [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskBOWt_LiaRwkOT7D?e=6mlvAq) [[Baidu Drive]](https://pan.baidu.com/s/1xiYXx_c9-NL9S3JL4bNQCA)(84ya)
-- UBIRIS.v2 [[OneDrive]](https://1drv.ms/u/s!AnGjwfpgT0qskBEc6UMj-avcmtgS?e=uFVynw) [[Baidu Drive]](https://pan.baidu.com/s/15ItwiSF5LZFYV1rYGNo47Q)(iudc)
+- CASIA.v4-distance [[Google Drive]](https://drive.google.com/file/d/1AbYXkYmQ1nfzNNZGr3aD5QQ2wQFxzyLO/view?usp=sharing) [[Baidu Drive]](https://pan.baidu.com/s/1G9kPfq72Iv5TqlPiQd82fA)(kdd6)
+- MICHE-I [[Google Drive]](https://drive.google.com/file/d/1V7WUjrY67-LlqKWMoTiMUN8ih-wmbrAq/view?usp=sharing) [[Baidu Drive]](https://pan.baidu.com/s/1xiYXx_c9-NL9S3JL4bNQCA)(84ya)
+- UBIRIS.v2 [[Google Drive]](https://drive.google.com/file/d/16aXbkU87wJuAml85dUbeADpjp56EL4HI/view?usp=sharing) [[Baidu Drive]](https://pan.baidu.com/s/15ItwiSF5LZFYV1rYGNo47Q)(iudc)
   
 
 ## Reference 
@@ -109,7 +109,3 @@ This package is only provided on "as it is" basis and does not include any warra
 
 ## Questions
 Please contact caiyong.wang@cripac.ia.ac.cn 
-
- 
-  
-  

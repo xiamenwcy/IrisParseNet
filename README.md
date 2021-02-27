@@ -3,6 +3,10 @@
 
 Created by [Caiyong Wang](https://caiyong.wang/) @ Institute of Automation, Chinese Academy of Sciences (**CASIA**)
 
+<img src="new.gif" width="8%" height="8%"> 
+><font size=4>Call for participating in the [**IJCB 2021 Official Competition**](http://ijcb2021.iapr-tc4.org/competitions/) about **NIR Iris Challenge Evaluation in Non-cooperative Environments: Segmentation and Localization (NIR-ISL 2021)**, welcome to visit our competition website: [https://sites.google.com/view/nir-isl2021/home](https://sites.google.com/view/nir-isl2021/home).</font>
+
+
 We propose a high-efficiency deep learning based iris segmentation approach, named **IrisParseNet**. 
 The proposed approach first applies a multi-task attention network to simultaneously predict the iris mask, 
 pupil mask and iris outer boundary. Then, based on the predicted pupil mask and iris outer boundary, 

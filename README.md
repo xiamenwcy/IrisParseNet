@@ -37,7 +37,7 @@ If you use this model or corresponding codes/datas for your research, please cit
   publisher={IEEE}
 }
 ```
-Anyone is permitted to use, distribute and change this program for any non-commercial usage. However each of such usage and/or publication must include above citation of this paper.
+Anyone is permitted to use, distribute and change this program for any non-commercial usage. However each of such usage and/or publication must include above citation of this paper. For any commercial usage, please send an email to wangcaiyong@bucea.edu.cn or caiyong.wang@cripac.ia.ac.cn. 
  
 ## Prerequisites
 - linux
@@ -112,4 +112,4 @@ This package is only provided on "as it is" basis and does not include any warra
 
 
 ## Questions
-Please contact caiyong.wang@cripac.ia.ac.cn 
+Please contact wangcaiyong@bucea.edu.cn or caiyong.wang@cripac.ia.ac.cn. 

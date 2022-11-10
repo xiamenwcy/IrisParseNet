@@ -54,6 +54,10 @@ We have provided the complete Caffe codes. Just install it following the officia
 
 - Caffe [[Google Drive]](https://drive.google.com/file/d/181EsUA6p12eoc7GU-zwSG5M4TxIR_pZZ/view) [[Baidu Drive]](https://pan.baidu.com/s/1zttJGXQfH2h3rLc37gQkXA)(zuhv)
 
+<img src="new.gif" width="8%" height="8%"> 
+
+> We have built a out-of-the-box Docker Caffe image ([https://www.codewithgpu.com/i/xiamenwcy/IrisParseNet/casia_caffe_tifs](https://www.codewithgpu.com/i/xiamenwcy/IrisParseNet/casia_caffe_tifs)) which is deployed on the [AutoDL](https://www.autodl.com/home) cloud server. You can enjoy it. There are no more worries stopping you from using **IrisParseNet**. :clap::clap:
+
 ### Model training and testing
 
 The complete codes for training and testing the model are placed at **Codes/IrisParseNet**, and the post-processing executable program is placed at **Codes/Post-processing**.

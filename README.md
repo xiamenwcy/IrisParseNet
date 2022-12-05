@@ -56,7 +56,7 @@ We have provided the complete Caffe codes. Just install it following the officia
 
 <img src="good-news.gif" width="8%" height="8%"> 
 
-> We have built a out-of-the-box Docker Caffe image ([https://www.codewithgpu.com/i/xiamenwcy/IrisParseNet/casia_caffe_tifs](https://www.codewithgpu.com/i/xiamenwcy/IrisParseNet/casia_caffe_tifs)) which is deployed on the [AutoDL](https://www.autodl.com/home) cloud server. You can enjoy it. There are no more worries stopping you from using **IrisParseNet**. :clap::clap:
+> We have built an out-of-the-box Docker Caffe image ([https://www.codewithgpu.com/i/xiamenwcy/IrisParseNet/casia_caffe_tifs](https://www.codewithgpu.com/i/xiamenwcy/IrisParseNet/casia_caffe_tifs)) which is deployed on the [AutoDL](https://www.autodl.com/home) cloud server. You can enjoy it. There are no more worries stopping you from using **IrisParseNet**. :clap::clap:
 
 ### Model training and testing
 
